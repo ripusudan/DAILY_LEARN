@@ -1,0 +1,60 @@
+Strategy Design Pattern with Java Enum
+========================================
+
+EnumStrategyPattern.java
+-----------------------------------------------------------------
+enum ValidationStrategy {
+
+	XML {
+		@Override
+		void doValidation(String input) {
+			System.out.println("This is xml validation of " + input);
+		}
+	},
+	JSON {
+		@Override
+		void doValidation(String input) {
+			System.out.println("This is JSON validation of " + input);
+		}
+	},
+	YAML {
+		@Override
+		void doValidation(String input) {
+			System.out.println("This is YAML validation of " + input);
+		}
+	};
+
+	abstract void doValidation(String input);
+}
+
+class ValidationContext {
+	private ValidationStrategy validationStrategy;
+
+	public ValidationStrategy getValidationStrategy() {
+		return validationStrategy;
+	}
+
+	public void setValidationStrategy(ValidationStrategy validationStrategy) {
+		this.validationStrategy = validationStrategy;
+	}
+
+	public void runValidation(String input) {
+		this.validationStrategy.doValidation(input);
+	}
+
+}
+
+public class EnumStrategyPattern {
+
+	public static void main(String[] args) {
+		ValidationContext context = new ValidationContext();
+		context.setValidationStrategy(ValidationStrategy.JSON);
+		context.runValidation("Hello");
+
+		context.setValidationStrategy(ValidationStrategy.XML);
+		context.runValidation("Hello");
+
+	}
+
+}
+-----------------------------------------------------------------
